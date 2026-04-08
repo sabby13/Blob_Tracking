@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PatchTrack — Feature Vision</title>
+  <link rel="stylesheet" href="style.css" />
+  <script async src="https://docs.opencv.org/4.8.0/opencv.js" onload="onOpenCvReady()" type="text/javascript"></script>
+</head>
+<body>
+
+  <div class="scanline"></div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-bracket">[</span>
+      PATCH<span class="logo-accent">TRACK</span>
+      <span class="logo-bracket">]</span>
+    </div>
+    <div class="status-bar">
+      <span class="status-dot" id="cvStatus"></span>
+      <span id="cvStatusText">LOADING CV ENGINE…</span>
+      <span class="sep">|</span>
+      <span id="frameCounter">FRAME: —</span>
+      <span class="sep">|</span>
+      <span id="featureCounter">FEATURES: —</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="upload-zone" id="uploadZone">
+      <div class="upload-inner">
+        <div class="upload-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="8" width="48" height="48" rx="4" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3"/>
+            <path d="M32 44V20M32 20L22 30M32 20L42 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="upload-title">DROP FILE TO ANALYZE</p>
+        <p class="upload-sub">IMAGE OR VIDEO · JPG PNG MP4 WEBM</p>
+        <label class="upload-btn" for="fileInput">
+          SELECT FILE
+          <input type="file" id="fileInput" accept="image/*,video/*" />
+        </label>
+      </div>
+    </div>
+
+    <div class="viewer" id="viewer" style="display:none;">
+      <div class="canvas-wrap">
+        <video id="srcVideo" playsinline muted style="display:none;"></video>
+        <img id="srcImage" style="display:none;" alt="" />
+        <canvas id="outputCanvas"></canvas>
+        <div class="hud-corners">
+          <span class="hud-c tl"></span>
+          <span class="hud-c tr"></span>
+          <span class="hud-c bl"></span>
+          <span class="hud-c br"></span>
+        </div>
+        <div class="hud-label" id="hudLabel">ANALYZING…</div>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn" id="resetBtn">↺ RESET</button>
+        <div class="ctrl-group">
+          <label>MAX FEATURES</label>
+          <input type="range" id="maxFeatures" min="10" max="100" value="50" />
+          <span id="maxFeaturesVal">50</span>
+        </div>
+        <div class="ctrl-group">
+          <label>PATCH SIZE</label>
+          <input type="range" id="patchSize" min="20" max="70" value="40" />
+          <span id="patchSizeVal">40</span>
+        </div>
+        <div class="ctrl-group" id="qualityGroup">
+          <label>QUALITY</label>
+          <input type="range" id="quality" min="1" max="100" value="30" />
+          <span id="qualityVal">0.30</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span>LUCAS-KANADE OPTICAL FLOW</span>
+    <span class="sep">·</span>
+    <span>SHI-TOMASI CORNER DETECTION</span>
+    <span class="sep">·</span>
+    <span>OPENCV.JS 4.8</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
